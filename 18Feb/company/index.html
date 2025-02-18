@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DOM TASK</h1>
+    <div>
+        <b>Name:</b><span id="name"></span><br>
+        <b>Company:</b><span id="company"></span><br>
+        <b>Phone:</b><span id="phone"></span>
+    </div>
+
+    <script>
+        var xmlhttp;
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Safari, Opera
+            xmlhttp = new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "address.xml", false);
+        xmlhttp.send();
+        var xmlDoc = xmlhttp.responseXML;
+        document.getElementById("name").innerHTML = xmlDoc.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+        document.getElementById("company").innerHTML = xmlDoc.getElementsByTagName("company")[0].childNodes[0].nodeValue;
+        document.getElementById("phone").innerHTML = xmlDoc.getElementsByTagName("phone")[0].childNodes[0].nodeValue;
+    </script>
+</body>
+</html>

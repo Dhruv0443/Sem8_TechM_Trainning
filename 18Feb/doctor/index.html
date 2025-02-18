@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid black;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color:lightskyblue;
+        }
+        .doctor-name {
+            font-weight: bold;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="doctorData"></div>
+
+    <script>
+        function loadXML() {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "Doctors.xml", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    displayDoctors(xhr.responseXML);
+                }
+            };
+            xhr.send();
+        }
+
+        function displayDoctors(xml) {
+            let doctors = xml.getElementsByTagName("doctor");
+            let output = "";
+
+            for (let i = 0; i < doctors.length; i++) {
+                let docname = doctors[i].getElementsByTagName("name")[0].textContent;
+                let speciality = doctors[i].getElementsByTagName("speciality")[0].textContent;
+                let patients = doctors[i].getElementsByTagName("patient");
+
+                output += `<table>
+                            <tr>
+                                <th colspan="3" class="doctor-name">${docname} - ${speciality}</th>
+                            </tr>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Age</th>
+                                <th>Condition</th>
+                            </tr>`;
+
+                for (let j = 0; j < patients.length; j++) {
+                    let patientname = patients[j].getElementsByTagName("name")[0].textContent;
+                    let age = patients[j].getElementsByTagName("age")[0].textContent;
+                    let condition = patients[j].getElementsByTagName("condition")[0].textContent;
+
+                    output += `<tr>
+                                <td>${patientname}</td>
+                                <td>${age}</td>
+                                <td>${condition}</td>
+                              </tr>`;
+                }
+                output += `</table>`;
+            }
+            document.getElementById("doctorData").innerHTML = output;
+        }
+
+        window.onload = loadXML;
+    </script>
+</body>
+</html>
