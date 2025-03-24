@@ -26,8 +26,8 @@
 </head>
 <body>
     <div id="doctorData"></div>
-
-    <script>
+</body>
+<script>
         function loadXML() {
             let xhr = new XMLHttpRequest();
             xhr.open("GET", "Doctors.xml", true);
@@ -38,16 +38,13 @@
             };
             xhr.send();
         }
-
         function displayDoctors(xml) {
             let doctors = xml.getElementsByTagName("doctor");
             let output = "";
-
             for (let i = 0; i < doctors.length; i++) {
                 let docname = doctors[i].getElementsByTagName("name")[0].textContent;
                 let speciality = doctors[i].getElementsByTagName("speciality")[0].textContent;
                 let patients = doctors[i].getElementsByTagName("patient");
-
                 output += `<table>
                             <tr>
                                 <th colspan="3" class="doctor-name">${docname} - ${speciality}</th>
@@ -75,6 +72,5 @@
         }
 
         window.onload = loadXML;
-    </script>
-</body>
+</script>
 </html>
