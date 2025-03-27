@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 // import Calculator from './component/25March_morn/Calculator';
 import Calculator from './component/25March_eve/Calculator';
+import ProductApp from './component/27March_morn/ProductApp';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
     //   </header>
     // </div>
     <div>
-      <Calculator/>
+      <ProductApp/>
     </div>
   );
 }
