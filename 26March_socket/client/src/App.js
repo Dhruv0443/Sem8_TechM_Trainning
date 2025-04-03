@@ -19,24 +19,19 @@ import {
   Link,
   useNavigate,
   useParams,
-} from "react-router-dom";
+} from "react-router-dom"; //Use Param - to navigate 
 import { io } from "socket.io-client";
-
 const socket = io("http://localhost:5000");
-
 const UserList = () => {
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     socket.emit("getUsers"); // Request users from the server
     socket.on("users", (data) => setUsers(data)); // Receive the users list
     return () => socket.off("users"); // Cleanup listener on unmount
   }, []);
-
   const deleteUser = (id) => {
     socket.emit("deleteUser", id); // Emit delete user event
   };
-
   return (
     <div>
       <h2>User List</h2>
@@ -53,12 +48,10 @@ const UserList = () => {
     </div>
   );
 };
-
 const UserForm = ({ isEdit }) => {
   const [user, setUser] = useState({ name: "", email: "" });
   const navigate = useNavigate();
   const { id } = useParams();
-
   useEffect(() => {
     if (isEdit) {
       socket.emit("getUser", id); // Request specific user data
@@ -66,7 +59,6 @@ const UserForm = ({ isEdit }) => {
     }
     return () => socket.off("user"); // Cleanup listener on unmount
   }, [id, isEdit]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
@@ -76,23 +68,19 @@ const UserForm = ({ isEdit }) => {
     }
     navigate("/");
   };
-
   return (
     <div>
       <h2>{isEdit ? "Edit User" : "Add User"}</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          placeholder="Name"
-          value={user.name}
-          onChange={(e) => setUser({ ...user, name: e.target.value })}
+          type="text" placeholder="Name"
+          value={user.name}//data binding  - React is 2 way data binding
+          onChange={(e) => setUser({ ...user, name: e.target.value })}//spread operator
           required
         />
         <input
-          type="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          type="email" placeholder="Email"
+          value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })}
           required
         />
         <button type="submit">{isEdit ? "Update" : "Add"}</button>

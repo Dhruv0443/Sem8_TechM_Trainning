@@ -25,7 +25,6 @@
 //     });
 // });
 // console.log('WebSocket server is running on ws://localhost:8080');
-
 const express = require("express");
 const { Server } = require("socket.io");
 const http = require("http");
@@ -39,32 +38,25 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
 app.use(cors());
-
 let users = [];
-
 io.on("connection", (socket) => {
   console.log("New client connected");
-
   // Send the list of users
   socket.on("getUsers", () => {
     socket.emit("users", users);
   });
-
   // Get a specific user by ID
   socket.on("getUser", (id) => {
     const user = users.find((u) => u.id === id);
     socket.emit("user", user);
   });
-
   // Add a new user
   socket.on("addUser", (user) => {
     user.id = Date.now().toString(); // Unique ID
     users.push(user);
     io.emit("users", users); // Broadcast updated users list
   });
-
   // Edit an existing user
   socket.on("editUser", (updatedUser) => {
     users = users.map((user) =>
@@ -72,18 +64,15 @@ io.on("connection", (socket) => {
     );
     io.emit("users", users); // Broadcast updated users list
   });
-
   // Delete a user
   socket.on("deleteUser", (id) => {
     users = users.filter((user) => user.id !== id);
     io.emit("users", users); // Broadcast updated users list
   });
-
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
 });
-
 server.listen(5000, () => {
   console.log("Socket.IO server is running on http://localhost:5000");
 });

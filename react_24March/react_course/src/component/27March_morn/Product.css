@@ -3,13 +3,11 @@
   margin: 20px auto;
   text-align: center;
 }
-
 .form input {
   padding: 8px;
   margin: 5px;
   width: 45%;
 }
-
 .btn-submit {
   background-color: #28a745;
   color: white;
@@ -17,19 +15,16 @@
   padding: 8px;
   cursor: pointer;
 }
-
 .product-table {
   width: 100%;
   margin-top: 20px;
   border-collapse: collapse;
 }
-
 .product-table th, 
 .product-table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
-
 .btn-edit {
   background-color: #ffc107;
   color: white;
@@ -38,7 +33,6 @@
   margin-right: 5px;
   cursor: pointer;
 }
-
 .btn-delete {
   background-color: #dc3545;
   color: white;
