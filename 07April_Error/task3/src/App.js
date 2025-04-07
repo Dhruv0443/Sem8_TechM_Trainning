@@ -12,8 +12,8 @@ const Buggy =()=>{
 const App=() =>{
   return (
     <Router>
-      <nav className='navabar navbar-expand-lg navbar-dark bg-dark'>
-        <div className='constainer'>
+      <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+        <div className='container'>
           <Link className='navbar-brand' to="/">ReactApp</Link>
           <div className='navbar-nav'>
             <Link className='nav-link' to="/">Home</Link>
@@ -38,5 +38,4 @@ const App=() =>{
     </Router>
   );
 }
-
 export default App;

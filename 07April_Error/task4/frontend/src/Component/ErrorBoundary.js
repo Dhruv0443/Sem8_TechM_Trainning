@@ -5,11 +5,9 @@ class ErrorBoundary extends React.Component{
         super(props);
         this.state={hasError:false, error:null};
     }
-    //Update state when an error is caught
     static getDerivedStateFromError(error){
         return {hasError:true,error};
     }
-    //Log error details
     componentDidCatch(error,errorinfo){
         console.error("Error caught by Error Boundary: ",error,errorinfo);
         //Send error to backend (fake API Example)
@@ -21,7 +19,7 @@ class ErrorBoundary extends React.Component{
                 info: errorinfo.componentStack,
                 time: new Date().toISOString(),
             }),
-        }).catch(err=> console.error("Failed to lof error,err"));
+        }).catch(err=> console.error("Failed to error,err"));
     }
     render(){
         if(this.state.hasError){
@@ -31,7 +29,7 @@ class ErrorBoundary extends React.Component{
                     <Alert.Heading>Oops! Something went wrong.</Alert.Heading>
                     <p>{this.state.error?.message}</p>
                     <hr/>
-                    <p className="mb-0">WE've been modified and are working on it.</p>
+                    <p className="mb-0">We've been modified and are working on it.</p>
                 </Alert>
                 </div>
             );
