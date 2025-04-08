@@ -1,52 +1,39 @@
+// src/components/EditUser.js
 import { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import UserContext from "./context/UserContext";
+import UserContext from "../context/UserContext";
 
 const EditUser = () => {
-  const { id } = useParams();
-  const { state, dispatch } = useContext(UserContext);
+    const { id } = useParams();
+    const { state, dispatch } = useContext(UserContext);
+    const user = state.find(user => user.id === parseInt(id));
+    const [name, setName] = useState(user?.name || "");
+    const [email, setEmail] = useState(user?.email || "");
+    const navigate = useNavigate();
 
-  const user = state.find((user) => user.id === parseInt(id));
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch({ type: "UPDATE_USER", payload: { id: parseInt(id), name, email } });
+        navigate("/");
+    };
 
-  const [name, setName] = useState(user ? user.name : "");
-  const [email, setEmail] = useState(user ? user.email : "");
-
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    dispatch({
-      type: "UPDATE_USER",
-      payload: {
-        id: parseInt(id),
-        name,
-        email,
-      },
-    });
-
-    navigate("/"); // redirect after update
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <button type="submit">Update User</button>
-    </form>
-  );
+    return (
+        <form onSubmit={handleSubmit}>
+            <input 
+                type="text" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                required 
+            />
+            <input 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+            />
+            <button type="submit">Update</button>
+        </form>
+    );
 };
 
 export default EditUser;

@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
-
 import Home from "./pages/Home";
 import Add from "./pages/Add";
 import Edit from "./pages/Edit";

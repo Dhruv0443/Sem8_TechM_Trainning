@@ -5,7 +5,7 @@ const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
 const DELETE_TODO = 'DELETE_TODO';
 //Define the intial state
-const intialState = [];
+const initialState = [];
 //DEfine the reducer funtion
 function reducer(state,action){
     switch (action.type) {
@@ -17,7 +17,7 @@ function reducer(state,action){
         case TOGGLE_TODO:
             return state.map(todo=>
                 todo.id===action.payload
-                ?{...todo,complete:!todo.completed}
+                ?{...todo,completed:!todo.completed}
                 :todo
             );       
         case DELETE_TODO:
@@ -28,7 +28,7 @@ function reducer(state,action){
     }
 }
 function TodoApp(){
-    const[state,dispatch] =useReducer(reducer,intialState);
+    const[state,dispatch] =useReducer(reducer,initialState);
     const [input,setInput]=useState('');
     const handleAdd =()=>{
         if(input.trim()){
@@ -49,7 +49,7 @@ function TodoApp(){
                         <span
                         onClick={()=>dispatch({type:TOGGLE_TODO,payload:todo.id})}
                         style={{
-                            textDecoration:todo.completed?"linethrough":'none',
+                            textDecoration:todo.completed?'line-through':'none',
                             cursor:'pointer',
                             marginRight:'10px'
                         }}
