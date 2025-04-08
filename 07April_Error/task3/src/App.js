@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter as Router,Routes,Route,Link} from "react-router-dom";
 import ErrorBoundary from './Component/ErrorBoundary';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 const Home =()=><div className='p-3'>Welcome to the Home Page</div>
 const About =()=><div className='p-3'>This is the About Page</div>
 //Simulate a component that throws an error

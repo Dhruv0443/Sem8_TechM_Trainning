@@ -1,17 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "./Component/ErrorBoundary";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 // Pages
 const Home = () => <div className="p-3">Welcome to the Home Page</div>;
-
 const About = () => <div className="p-3">This is the About Page</div>;
-
 const Buggy = () => { 
   throw new Error("Something broke in Buggy component!");
 };
-
 // 404 Page
 const NotFound = () => (
   <div className="container mt-5 text-center">
@@ -20,7 +16,6 @@ const NotFound = () => (
     <Link className="btn btn-primary" to="/">Go to Home</Link>
   </div>
 );
-
 const App = () => {
   return (
     <Router>
@@ -34,22 +29,18 @@ const App = () => {
           </div>
         </div>
       </nav>
-
       <Routes>
         <Route path="/" element={<Home />} />
-
         <Route path="/about" element={
           <ErrorBoundary>
             <About />
           </ErrorBoundary>
         } />
-
         <Route path="/buggy" element={
           <ErrorBoundary>
             <Buggy />
           </ErrorBoundary>
         } />
-
         {/* 404 Route */}
         <Route path="*" element={
           <ErrorBoundary>
@@ -60,5 +51,4 @@ const App = () => {
     </Router>
   );
 };
-
 export default App;
