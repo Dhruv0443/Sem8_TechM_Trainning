@@ -8,5 +8,5 @@ const withAuth =(WrappedComponent)=>{
     };
 };
 //Dashboard.js
-const Dashboard =()=><h1>Welcome to DAshbaoard!</h1>
+const Dashboard =()=><h1>Welcome to Dashboard!</h1>
 export default withAuth(Dashboard); //Protects the Dashboard
