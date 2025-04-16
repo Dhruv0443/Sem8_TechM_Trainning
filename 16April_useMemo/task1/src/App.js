@@ -1,6 +1,15 @@
-import { useMemo, useState } from "react";
-import UserList from "./components/UserList";
-
+import React ,{ useMemo, useState } from "react";
+//Child component wrapped with React.memo
+const UserList=React.memo(({users})=>{
+    console.log('Rendering UserList');
+    return(
+        <ul>
+            {users.map(user=>(
+                <li key={user.id}>{user.name}</li>
+            ))}
+        </ul>
+    );
+});
 export default function App() {
   const[search, setSearch]=useState('');
   const[counter, setCounter]=useState(0);
