@@ -14,7 +14,7 @@ function App() {
     <div className="p-6 max-w-md mx-auto">
       <h1 className='text-2xl font-bold mb-4'>User Manager</h1>
       <AddUserForm onAddUser={addUser}/>
-      <UserList users={users} onDeleteUser = {deleteUser}/>
+      <UserList users={users} onDelete={deleteUser}/>
     </div>
   );
 }
