@@ -1,0 +1,7 @@
+{
+    "patients":[
+        {"id":1,"name":"rahul","condition":"fever","room":"101","status":"Stable"},
+        {"id":1,"name":"darpan","condition":"fracture","room":"102","status":"Recovering"},
+        {"id":1,"name":"Gifty","condition":"cardiac arrest","room":"ICU","status":"Critical"}
+    ]
+}
