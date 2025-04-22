@@ -40,17 +40,20 @@ const BankForm =({addOrEdit, recordForEdit})=>{
         <form autoComplete="off" onSubmit={handleSubmit} className="p-3">
             <div className="form-group mb-2">
                 <label>Name</label>
-                <input name="name" value={values.name} onChange={handleInputChange} className={`form-control ${errors.name && 'is-invalid'}`}/>
+                <input name="name" value={values.name} onChange={handleInputChange} 
+                className={`form-control ${errors.name && 'is-invalid'}`}/>
                 <div className="invalid-feedback">{errors.name}</div>
             </div>
             <div className="form-group mb-2">
                 <label>Account Number</label>
-                <input name="accountNumber" value={values.accountNumber} onChange={handleInputChange} className={`form-control ${errors.accountNumber &&'is-invalid'}`}/>
+                <input name="accountNumber" value={values.accountNumber} onChange={handleInputChange} 
+                className={`form-control ${errors.accountNumber &&'is-invalid'}`}/>
                 <div className="invalid-feedback">{errors.accountNumber}</div>
             </div>
             <div className="form-group mb-2">
                 <label>Balance</label>
-                <input name="balance" value={values.balance} onChange={handleInputChange} className={`form-control ${errors.balance && 'is-invalid'}`}/>
+                <input name="balance" value={values.balance} onChange={handleInputChange} 
+                className={`form-control ${errors.balance && 'is-invalid'}`}/>
                 <div className="invalid-feedback">{errors.balance} </div>
             </div>
             <div className="d-flex justify-content-between">
