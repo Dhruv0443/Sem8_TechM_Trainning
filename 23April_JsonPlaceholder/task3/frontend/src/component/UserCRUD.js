@@ -1,58 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { v4 as uuidv4 } from 'uuid'; // Import UUID
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 const UserCRUD = () => {
-  const [users, setUsers] = useState({});
-  const [newUserId, setNewUserId] = useState('');
-  const [newUserName, setNewUserName] = useState('');
-
+  const [users, setUsers] = useState([]); // State to hold an array of user objects
+  const [user, setUser] = useState({ name: '', email: '' }); // State for a single user
+  const [editingUserId, setEditingUserId] = useState(null); // Track user being edited
   const API_URL = 'http://localhost:5000/users'; // Backend API URL
-
   // Fetch Users
   const fetchUsers = async () => {
-    try {
-      const response = await axios.get(API_URL);
-      setUsers(response.data || {});
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
+    const response = await axios.get(API_URL);
+    const usersArray = Object.keys(response.data || {}).map((id) => ({
+      id, // Include the ID in each user object
+      ...response.data[id], // Spread the rest of the user details
+    }));
+    setUsers(usersArray);
   };
-
   // Add User
   const addUser = async () => {
-    try {
-      if (newUserId.trim() && newUserName.trim()) {
-        await axios.post(API_URL, { id: newUserId, name: newUserName });
-        setNewUserId('');
-        setNewUserName('');
-        fetchUsers();
-      }
-    } catch (error) {
-      console.error('Error adding user:', error);
-    }
+    await axios.post(API_URL, { id: uuidv4(), ...user });
+    setUser({ name: '', email: '' }); // Reset form
+    fetchUsers();
+  };
+  // Update User
+  const updateUser = async () => {
+    const updatedData = {};
+    if (user.name) updatedData.name = user.name;
+    if (user.email) updatedData.email = user.email;
+    await axios.put(`${API_URL}/${editingUserId}`, updatedData);
+    setUser({ name: '', email: '' }); // Reset form
+    setEditingUserId(null); // Reset editing state
+    fetchUsers();
   };
 
-  // Update User
-  const updateUser = async (id) => {
-    try {
-      const newName = prompt('Enter new name:');
-      if (newName.trim()) {
-        await axios.put(`${API_URL}/${id}`, { name: newName });
-        fetchUsers();
-      }
-    } catch (error) {
-      console.error('Error updating user:', error);
-    }
+  // Start Editing User
+  const editUser = (id) => {
+    const selectedUser = users.find((u) => u.id === id); // Find the user being edited
+    setEditingUserId(id);
+    setUser({
+      name: selectedUser?.name || '',
+      email: selectedUser?.email || '',
+    }); // Pre-fill form with user details
   };
 
   // Delete User
   const deleteUser = async (id) => {
-    try {
-      await axios.delete(`${API_URL}/${id}`);
-      fetchUsers();
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
+    await axios.delete(`${API_URL}/${id}`);
+    fetchUsers();
   };
 
   useEffect(() => {
@@ -60,32 +54,79 @@ const UserCRUD = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Realtime Database CRUD</h1>
-      <input
-        type="text"
-        value={newUserId}
-        onChange={(e) => setNewUserId(e.target.value)}
-        placeholder="Enter User ID"
-      />
-      <input
-        type="text"
-        value={newUserName}
-        onChange={(e) => setNewUserName(e.target.value)}
-        placeholder="Enter User Name"
-      />
-      <button onClick={addUser}>Add User</button>
-      <ul>
-        {Object.keys(users).map((id) => (
-          <li key={id}>
-            {id}: {users[id].name}{' '}
-            <button onClick={() => updateUser(id)}>Edit</button>
-            <button onClick={() => deleteUser(id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">User Management</h1>
+
+      {/* Form for Adding or Updating User */}
+      <div className="p-4 mb-4">
+        <h4 className="mb-3 text-center">
+          {editingUserId ? 'Edit User' : 'Add New User'}
+        </h4>
+        <div className="row">
+          <div className="col-md-5 mb-3">
+            <input
+              type="text"
+              className="form-control"
+              value={user.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              placeholder="Enter User Name"
+            />
+          </div>
+          <div className="col-md-5 mb-3">
+            <input
+              type="email"
+              className="form-control"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              placeholder="Enter User Email"
+            />
+          </div>
+          <div className="col-md-2">
+            <button
+              className={'btn btn-success'}
+              onClick={editingUserId ? updateUser : addUser}
+            >
+              {editingUserId ? 'Update User' : 'Add User'}
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* User Table */}
+      <div className="">
+        <h4 className="text-center mb-4">User List</h4>
+        <table className="table table-bordered">
+          <thead className="thead-dark">
+            <tr>
+            <th>Name</th>
+              <th>Email</th>
+              <th className="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td className="text-center">
+                  <button
+                    className="btn btn-warning btn-sm mx-2"
+                    onClick={() => editUser(user.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => deleteUser(user.id)}
+                  >
+                      Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
-
 export default UserCRUD;
