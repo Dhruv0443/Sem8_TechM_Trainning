@@ -25,7 +25,7 @@ const App=()=> {
   };
   return (
     <div className="container mt-4">
-      <h2 className="text-center mb-4">Banl Account Management</h2>
+      <h2 className="text-center mb-4">Bank Account Management</h2>
       <div className="row">
         <div className="col-md-4">
           <BankForm addOrEdit={addOrEdit} recordForEdit={recordForEdit}/>
