@@ -23,9 +23,7 @@ describe('RestaurantItem', () => {
       location: 'NYC',
       cuisine: 'Mexican',
     };
-  
     render(<RestaurantItem restaurant={restaurant} onDelete={mockDelete} onEdit={mockEdit} />);
-  
     expect(screen.getByText('Testaurant')).toBeInTheDocument();
     expect(screen.getByText(/Location:/i)).toBeInTheDocument();
     expect(screen.getByText(/NYC/i)).toBeInTheDocument();        
